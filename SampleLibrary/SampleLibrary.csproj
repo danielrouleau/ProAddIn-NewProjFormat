@@ -1,15 +1,12 @@
-<Project>
+<Project Sdk="MSBuild.Sdk.Extras/2.1.2">
 
   <PropertyGroup Label="Globals">
-    <CustomProjectExtensionsPath>$(MSBuildProjectDirectory)\..\CustomProjectSystem\</CustomProjectExtensionsPath>
     <ProjectGuid>5104e866-e3ea-4351-8bd0-4806d994936b</ProjectGuid>
-  </PropertyGroup>
-  
-  <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
+    <Platforms>AnyCPU;x86</Platforms>
     <UseWpf>true</UseWpf>
   </PropertyGroup>
-  
+ 
   <PropertyGroup Label="Configuration">
     <RootNamespace>Sample.Library</RootNamespace>
     <AssemblyName>Sample.Library</AssemblyName>
@@ -18,8 +15,6 @@
     <Product />
   </PropertyGroup>
  
-  <Import Project="$(CustomProjectExtensionsPath)CustomProject.props" />
-  
   <ItemGroup>
     <AddInContent Include="Config.daml" />
     <AddInContent Include="Images\AddInDesktop16.png" />
