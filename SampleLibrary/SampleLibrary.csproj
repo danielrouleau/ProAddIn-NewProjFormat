@@ -1,15 +1,18 @@
-<Project>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup Label="MultilingualAppToolkit">
+    <MultilingualAppToolkitVersion>4.0</MultilingualAppToolkitVersion>
+    <MultilingualFallbackLanguage>en-US</MultilingualFallbackLanguage>
+    <TranslationReport Condition="'$(Configuration)' == 'Release'">true</TranslationReport>
+    <SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
+  </PropertyGroup>
   <PropertyGroup Label="Globals">
-    <CustomProjectExtensionsPath>$(MSBuildProjectDirectory)\..\CustomProjectSystem\</CustomProjectExtensionsPath>
     <ProjectGuid>5104e866-e3ea-4351-8bd0-4806d994936b</ProjectGuid>
-  </PropertyGroup>
-  
-  <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
+    <Platforms>AnyCPU;x86</Platforms>
     <UseWpf>true</UseWpf>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
-  
   <PropertyGroup Label="Configuration">
     <RootNamespace>Sample.Library</RootNamespace>
     <AssemblyName>Sample.Library</AssemblyName>
@@ -17,9 +20,10 @@
     <Authors />
     <Product />
   </PropertyGroup>
- 
-  <Import Project="$(CustomProjectExtensionsPath)CustomProject.props" />
-  
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.ResxResources.targets')" />
+  <Target Name="MATPrerequisite" BeforeTargets="PrepareForBuild" Condition="!Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets')" Label="MultilingualAppToolkit">
+    <Warning Text="$(MSBuildProjectFile) is Multilingual build enabled, but the Multilingual App Toolkit is unavailable during the build. If building with Visual Studio, please check to ensure that toolkit is properly installed." />
+  </Target>
   <ItemGroup>
     <AddInContent Include="Config.daml" />
     <AddInContent Include="Images\AddInDesktop16.png" />
@@ -27,9 +31,20 @@
     <AddInContent Include="DarkImages\AddInDesktop16.png" />
     <AddInContent Include="DarkImages\AddInDesktop32.png" />
   </ItemGroup>
-  
   <ItemGroup>
     <PackageReference Include="Esri.ArcGISPro.Extensions" Version="2.6.0.24783" />
   </ItemGroup>
-  
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
